@@ -4,6 +4,7 @@ import de.philw.automaticcraftingtable.AutomaticCraftingTable;
 import de.philw.automaticcraftingtable.manager.ConfigManager;
 import de.philw.automaticcraftingtable.manager.CraftingTableManager;
 import de.philw.automaticcraftingtable.util.Direction;
+import de.philw.automaticcraftingtable.util.FoliaScheduler;
 import de.philw.automaticcraftingtable.util.StackItems;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -79,7 +80,7 @@ public class CheckHopperTask implements Runnable {
             }
 
             if (accepted) {
-                Bukkit.getScheduler().runTaskLater(automaticCraftingTable, () ->  { // It's run later so all crafting tables know what items they have to put
+                FoliaScheduler.runAsyncSchedulerDelay(automaticCraftingTable, task -> { // It's run later so all crafting tables know what items they have to put
                     // in what hopper, and then they can do that after every crafting table knows that. Without this a chain of crafting tables could
                     // craft the result in one passage.
                     toHopper.getInventory().addItem(wantItemStack);

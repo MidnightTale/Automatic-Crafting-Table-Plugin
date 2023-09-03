@@ -11,6 +11,7 @@ import de.philw.automaticcraftingtable.manager.ConfigManager;
 import de.philw.automaticcraftingtable.manager.CraftingTableManager;
 import de.philw.automaticcraftingtable.task.CheckHopperTask;
 import de.philw.automaticcraftingtable.util.ACTBlockUTIL;
+import de.philw.automaticcraftingtable.util.FoliaScheduler;
 import de.philw.automaticcraftingtable.util.RecipeUtil;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -49,7 +50,7 @@ public final class AutomaticCraftingTable extends JavaPlugin {
 
         int timer = ConfigManager.getTimer();
 
-        Bukkit.getScheduler().runTaskTimer(this, new CheckHopperTask(this), timer, timer);
+        FoliaScheduler.runAsyncSchedulerFixRate(this, task -> new CheckHopperTask(this).run(), timer, timer);
 
         Bukkit.getServer().getLogger().info(getMessageBeginning() + "Plugin has been enabled.");
     }
